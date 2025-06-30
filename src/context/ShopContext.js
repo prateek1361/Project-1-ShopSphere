@@ -69,12 +69,15 @@ export function ShopProvider({ children }) {
     }
   };
 
-  const addToCart = async (product) => {
+  const addToCart = async (product, quantity = 1) => {
     try {
       const res = await fetch("https://shop-sphere-eosin.vercel.app/cart/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product._id }),
+        body: JSON.stringify({
+          productId: product._id,
+          quantity: quantity,
+        }),
       });
 
       if (res.ok) {
