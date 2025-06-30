@@ -163,12 +163,50 @@ export function ShopProvider({ children }) {
     toast("Moved to cart");
   };
 
-  const increaseQty = (id) => {
-    toast("🔼 Increase qty (not yet implemented)");
+  const increaseQty = async (itemId) => {
+    try {
+      const res = await fetch(
+        `https://shop-sphere-eosin.vercel.app/cart/update/${itemId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ change: 1 }),
+        }
+      );
+
+      if (res.ok) {
+        await fetchCart();
+        toast.success("🔼 Quantity increased");
+      } else {
+        toast.error("Failed to increase quantity");
+      }
+    } catch (err) {
+      console.error("Error increasing quantity:", err);
+      toast.error("Something went wrong");
+    }
   };
 
-  const decreaseQty = (id) => {
-    toast("🔽 Decrease qty (not yet implemented)");
+  const decreaseQty = async (itemId) => {
+    try {
+      const res = await fetch(
+        `https://shop-sphere-eosin.vercel.app/cart/update/${itemId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ change: -1 }),
+        }
+      );
+
+      if (res.ok) {
+        await fetchCart();
+        toast.success("🔽 Quantity decreased");
+      } else {
+        toast.error("Failed to decrease quantity");
+      }
+    } catch (err) {
+      console.error("Error decreasing quantity:", err);
+      toast.error("Something went wrong");
+    }
   };
 
   const selectAddress = (address) => {
@@ -182,14 +220,22 @@ export function ShopProvider({ children }) {
     }
 
     const orderPayload = {
-      items: cart.map((item) => ({
-        name: item.productId.name,
-        price: item.productId.price,
-        image: item.productId.image,
-        qty: item.quantity || 1,
-      })),
-      address: selectedAddress,
-      date: new Date().toISOString(),
+      items: cart.map((item) => {
+        const product = item.productId || {}; // Defensive in case cart format changes
+        return {
+          productId: product._id ?? item.productId,
+          name: product.name ?? item.name,
+          price: product.price ?? item.price,
+          image: product.image ?? item.image,
+          qty: item.quantity || 1,
+        };
+      }),
+      address: {
+        name: selectedAddress.name,
+        street: selectedAddress.street,
+        city: selectedAddress.city,
+        pincode: selectedAddress.pincode,
+      },
     };
 
     try {
@@ -203,14 +249,21 @@ export function ShopProvider({ children }) {
       );
 
       for (let item of cart) {
-        await fetch(`https://shop-sphere-eosin.vercel.app/cart/${item._id}`, {
-          method: "DELETE",
-        });
+        const cartItemId = item._id;
+        const delRes = await fetch(
+          `https://shop-sphere-eosin.vercel.app/cart/${cartItemId}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (!delRes.ok) {
+          console.error(`Failed to delete cart item ${cartItemId}`);
+        }
       }
 
       toast.success("🎉 Order placed successfully");
-      fetchCart();
-      fetchOrders();
+      await fetchCart();
+      await fetchOrders();
     } catch (err) {
       console.error("Order placement failed:", err);
       toast.error("Something went wrong");
