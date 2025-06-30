@@ -1,5 +1,7 @@
 import { useShop } from "../context/ShopContext";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CheckoutPage() {
   const {
@@ -47,12 +49,13 @@ export default function CheckoutPage() {
         const res = await fetch(
           `https://shop-sphere-eosin.vercel.app/addresses/update/${editId}`,
           {
-            method: "PUT",
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newAddress),
           }
         );
         if (!res.ok) throw new Error("Failed to update address");
+        toast.success("✅ Updated address");
 
         setIsEditing(false);
         setEditId(null);
@@ -66,6 +69,7 @@ export default function CheckoutPage() {
           }
         );
         if (!res.ok) throw new Error("Failed to add address");
+        toast.success("✅ Address added");
       }
 
       await fetchAddresses();
@@ -96,6 +100,8 @@ export default function CheckoutPage() {
         }
       );
       if (!res.ok) throw new Error("Failed to delete address");
+
+      toast("🗑️ Address deleted");
 
       await fetchAddresses();
     } catch (err) {
@@ -218,7 +224,7 @@ export default function CheckoutPage() {
                       alt={product.name}
                       className="img-fluid"
                       style={{
-                        maxHeight: "80px",
+                        maxHeight: "100px",
                         maxWidth: "100px",
                         objectFit: "contain",
                       }}
