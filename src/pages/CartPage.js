@@ -36,7 +36,7 @@ export default function CartPage() {
                 const originalPrice = Math.round(product.price * 1.25 || 0);
                 return (
                   <div className="row mb-4 shadow-sm" key={item._id}>
-                    <div className="col-md-4 bg-body-secondary d-flex align-items-center justify-content-center">
+                    <div className="col-md-6 bg-body-secondary d-flex align-items-center justify-content-center">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -45,7 +45,7 @@ export default function CartPage() {
                       />
                     </div>
 
-                    <div className="col-md-8 bg-white">
+                    <div className="col-md-6 bg-white">
                       <h5 className="mt-3">{product.name}</h5>
                       <p className="fw-bold fs-5 mb-2 mt-2">
                         ₹{product.price}{" "}
@@ -95,7 +95,6 @@ export default function CartPage() {
               })}
             </div>
 
-            {/* Price Details */}
             <div className="col-md-5 px-3">
               <div
                 className="card p-3 shadow-sm sticky-top"
