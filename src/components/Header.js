@@ -58,11 +58,14 @@ const Header = () => {
             <div className="ms-auto d-flex align-items-center">
               <button className="btn btn-secondary me-3">Login</button>
               <Link
-                className="bi bi-person-circle text-secondary mx-3"
+                className="bi bi-person-circle text-secondary mx-2"
                 to="/profile"
               ></Link>
 
-              <Link className="text-decoration-none me-2" to="/wishlistPage">
+              <Link
+                className="text-decoration-none me-2 mx-2"
+                to="/wishlistPage"
+              >
                 <div className="position-relative d-inline-block">
                   <i className="bi bi-heart me-1 text-body-secondary"></i>
                   <WishlistStatus />
@@ -71,7 +74,7 @@ const Header = () => {
 
               <Link
                 to="/cartPage"
-                className="text-decoration-none text-body-secondary me-3"
+                className="text-decoration-none text-body-secondary me-3 mx-2"
               >
                 <div className="position-relative d-inline-block">
                   <i className="bi bi-cart text-body-secondary fs-5"></i>
