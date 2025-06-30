@@ -14,13 +14,13 @@ export default function WishlistPage() {
           {wishlist.length === 0 && <p>No items in wishlist.</p>}
 
           {wishlist.map((item) => (
-            <div className="col-md-3 mb-4" key={item._id}>
+            <div className="col-md-4 mb-4" key={item._id}>
               <div className="card h-100 text-center bg-body-secondary">
                 <img
                   src={item.productId?.image}
                   alt={item.productId?.name}
                   className="img-fluid p-3"
-                  style={{ height: "250px", objectFit: "contain" }}
+                  style={{ height: "400px", objectFit: "contain" }}
                 />
                 <div className="card-body">
                   <h6>{item.productId?.name}</h6>
