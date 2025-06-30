@@ -46,7 +46,7 @@ export default function ProductDetailPage() {
 
                 <div className="mt-2">
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => addToCart(product, quantity)}
                     className="btn btn-primary me-2 w-100 rounded-0"
                   >
                     Add to Cart
