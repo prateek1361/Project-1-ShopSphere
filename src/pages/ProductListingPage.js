@@ -67,7 +67,7 @@ export default function ProductListingPage() {
       : sortedProducts;
 
   return (
-    <div className="container-fluid mt-4">
+    <div className="container-fluid mt-4 px-5">
       <div className="row">
         <section className="col-md-3 mt-4 ">
           <div className="d-flex justify-content-between">
@@ -77,21 +77,25 @@ export default function ProductListingPage() {
           <hr />
           <div className="mt-3">
             <h5 className="fw-bold mt-4">Price</h5>
-            <div className="d-flex justify-content-between">
-              <span>₹0</span>
-              <span>₹250000</span>
-              <span>₹500000</span>
+            <div className="mb-3" style={{ maxWidth: "400px" }}>
+              <div className="d-flex justify-content-between">
+                <span>₹0</span>
+                <span>₹250000</span>
+                <span>₹500000</span>
+              </div>
+
+              <input
+                type="range"
+                min="0"
+                max="500000"
+                step="1000"
+                value={priceRange}
+                onChange={(e) => setPriceRange(Number(e.target.value))}
+                className="form-range"
+              />
+
+              <div>Up to ₹{priceRange}</div>
             </div>
-            <input
-              type="range"
-              min="0"
-              max="500000"
-              step="1000"
-              value={priceRange}
-              onChange={(e) => setPriceRange(Number(e.target.value))}
-              className="form-range"
-            />
-            <div>Up to ₹{priceRange}</div>
           </div>
           <div>
             <h5 className="fw-bold mt-4">Category</h5>
