@@ -34,6 +34,7 @@ Backend:
 - Node.js
 - Express
 - MongoDB
+- Mongoose
 
 ---
 
