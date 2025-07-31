@@ -27,6 +27,7 @@ Frontend:
 - React JS
 - React Router
 - Bootstrap
+- useContext (React)
 
 
 Backend:
